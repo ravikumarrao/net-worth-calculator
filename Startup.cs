@@ -37,6 +37,8 @@ namespace api
                 options.AddPolicy(name: _allowCorsUiLocal,
                                   policy =>
                                   {
+                                      policy.AllowAnyMethod();
+                                      policy.AllowAnyHeader();
                                       policy.WithOrigins("http://localhost:4200");
                                   });
             });

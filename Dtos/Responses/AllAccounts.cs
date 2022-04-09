@@ -14,6 +14,6 @@ namespace api.Dtos.Responses
 
     public class Account {
         public string Name { get; set; }
-        public Decimal Balance { get; set; }
+        public decimal Balance { get; set; }
     }
 }
