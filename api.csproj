@@ -7,8 +7,23 @@
 
   <ItemGroup>
     <None Remove="Microsoft.AspNetCore.Cors" />
+    <None Remove="Models\" />
+    <None Remove="Dtos\Requests\" />
+    <None Remove="Dtos\Responses\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Utils\" />
+    <None Remove="Swashbuckle.AspNetCore" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+    <Folder Include="Dtos\Requests\" />
+    <Folder Include="Dtos\Responses\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Dtos\Responses\" />
   </ItemGroup>
 </Project>

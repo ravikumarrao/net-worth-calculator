@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using api.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +17,8 @@ namespace api
 {
     public class Startup
     {
+        private readonly string _allowCorsUiLocal = "allow-ui-local";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,9 +29,19 @@ namespace api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(x => x.JsonSerializerOptions.PropertyNamingPolicy = new SnakeCaseNamingPolicy());
 
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _allowCorsUiLocal,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:4200");
+                                  });
+            });
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,11 +50,15 @@ namespace api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(_allowCorsUiLocal);
 
             app.UseAuthorization();
 
@@ -49,7 +67,6 @@ namespace api
                 endpoints.MapControllers();
             });
 
-            app.UseCors();
         }
     }
 }
