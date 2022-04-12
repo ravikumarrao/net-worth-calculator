@@ -25,5 +25,6 @@
     <Folder Include="Dtos\Responses\" />
     <Folder Include="Utils\" />
     <Folder Include="Dtos\Responses\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
