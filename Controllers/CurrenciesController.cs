@@ -14,21 +14,21 @@ namespace api.Controllers
 {
     [ApiController]
     [Route("currencies")]
-    public class CurrencyController : ControllerBase
+    public class CurrenciesController : ControllerBase
     {
-        private readonly ILogger<CurrencyController> _logger;
+        private readonly ILogger<CurrenciesController> _logger;
 
         private static readonly Dictionary<string, Currency> _currencies;
         private readonly string _apiKey;
         private readonly HttpClient _httpClient;
 
-        static CurrencyController()
+        static CurrenciesController()
         {
             _currencies = GetDefaultCurrencies();
             
         }
 
-        public CurrencyController(ILogger<CurrencyController> logger, IConfiguration configuration, IHttpClientFactory httpClientFactory)
+        public CurrenciesController(ILogger<CurrenciesController> logger, IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _apiKey = configuration.GetValue<string>("polygon-io-api-key");

@@ -7,12 +7,12 @@ namespace api.Controllers
 {
     [ApiController]
     [Route("users/{userId}/net-worth")]
-    public class NetWorthCalculatorController : ControllerBase
+    public class CalculatorController : ControllerBase
     {
         private readonly AccountsController _accountsController;
-        private readonly UserController _userController;
+        private readonly UsersController _userController;
 
-        public NetWorthCalculatorController(AccountsController accountsController, UserController userController)
+        public CalculatorController(AccountsController accountsController, UsersController userController)
         {
             _accountsController = accountsController;
             _userController = userController;

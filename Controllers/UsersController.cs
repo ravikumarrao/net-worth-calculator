@@ -12,17 +12,17 @@ namespace api.Controllers
 {
     [ApiController]
     [Route("users")]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private static int DUMMY_USER_ID = 42;
 
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<UsersController> _logger;
         private static Dictionary<int, User> _users = new Dictionary<int, User>();
         private AccountsController _accountsController;
-        private CurrencyController _currencyController;
+        private CurrenciesController _currencyController;
 
 
-        public UserController(ILogger<UserController> logger, AccountsController accountsController, CurrencyController currencyController)
+        public UsersController(ILogger<UsersController> logger, AccountsController accountsController, CurrenciesController currencyController)
         {
             _logger = logger;
             _accountsController = accountsController;

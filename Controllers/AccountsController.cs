@@ -17,9 +17,9 @@ namespace api.Controllers
         private static readonly Dictionary<int, Dictionary<int, Account>> _userAccounts = new Dictionary<int, Dictionary<int, Account>>();
 
         private readonly ILogger<AccountsController> _logger;
-        private readonly CurrencyController _currencyController;
+        private readonly CurrenciesController _currencyController;
 
-        public AccountsController(ILogger<AccountsController> logger, CurrencyController currencyController)
+        public AccountsController(ILogger<AccountsController> logger, CurrenciesController currencyController)
         {
             _logger = logger;
             _currencyController = currencyController;
