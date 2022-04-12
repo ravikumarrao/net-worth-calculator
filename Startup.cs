@@ -1,4 +1,5 @@
-﻿using api.Utils;
+﻿using System.Text.Json.Serialization;
+using api.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,11 @@ namespace api
             services.AddHttpClient();
 
             services.AddControllers()
-                .AddJsonOptions(x => x.JsonSerializerOptions.PropertyNamingPolicy = new SnakeCaseNamingPolicy())
+                .AddJsonOptions(x =>
+                {
+                    x.JsonSerializerOptions.PropertyNamingPolicy = new SnakeCaseNamingPolicy();
+                    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                })
                 .AddControllersAsServices();
 
             services.AddCors(options =>
