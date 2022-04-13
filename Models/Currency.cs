@@ -5,5 +5,6 @@ namespace api.Models
     {
         public string IsoCode { get; set; }
         public string Symbol { get; set; }
+        public string Locale { get; set; } = "en-US";
     }
 }
