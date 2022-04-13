@@ -68,15 +68,15 @@ namespace api.Controllers
         {
             return new List<Currency>
             {
-                new Currency { IsoCode = "USD", Symbol = "$" },
-                new Currency { IsoCode = "CAD", Symbol = "$" },
-                new Currency { IsoCode = "EUR", Symbol = "€" },
-                new Currency { IsoCode = "JPY", Symbol = "¥" },
-                new Currency { IsoCode = "GBP", Symbol = "£" },
-                new Currency { IsoCode = "AUD", Symbol = "$" },
-                new Currency { IsoCode = "NZD", Symbol = "$" },
+                new Currency { IsoCode = "USD", Symbol = "$", Locale = "en-US" },
+                new Currency { IsoCode = "CAD", Symbol = "$", Locale = "en-CA" },
+                new Currency { IsoCode = "EUR", Symbol = "€", Locale = "fr-FR" },
+                new Currency { IsoCode = "JPY", Symbol = "¥", Locale = "ja-JP" },
+                new Currency { IsoCode = "GBP", Symbol = "£", Locale = "en-GB" },
+                new Currency { IsoCode = "AUD", Symbol = "$", Locale = "en-AU" },
+                new Currency { IsoCode = "CNY", Symbol = "¥", Locale = "zh-CN" },
                 new Currency { IsoCode = "THB", Symbol = "฿" },
-                new Currency { IsoCode = "INR", Symbol = "₹" },
+                new Currency { IsoCode = "INR", Symbol = "₹", Locale = "en-IN" },
                 new Currency { IsoCode = "LKR", Symbol = "Rs" }
             }
             .ToDictionary(c => c.IsoCode);
