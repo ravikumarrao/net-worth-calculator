@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using api.Dtos.Requests;
+using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,21 +13,21 @@ namespace api.Controllers
 {
     [ApiController]
     [Route("users")]
-    public class UsersController : ControllerBase
+    public class UsersController : ControllerBase, IUsersService
     {
         private static int DUMMY_USER_ID = 42;
 
         private readonly ILogger<UsersController> _logger;
         private static Dictionary<int, User> _users = new Dictionary<int, User>();
-        private AccountsController _accountsController;
-        private CurrenciesController _currencyController;
+        private IAccountsService _accountsService;
+        private ICurrenciesService _currencyService;
 
 
-        public UsersController(ILogger<UsersController> logger, AccountsController accountsController, CurrenciesController currencyController)
+        public UsersController(ILogger<UsersController> logger, IAccountsService accountsService, ICurrenciesService currenciesService)
         {
             _logger = logger;
-            _accountsController = accountsController;
-            _currencyController = currencyController;
+            _accountsService = accountsService;
+            _currencyService = currenciesService;
         }
 
         [HttpGet]
@@ -57,14 +58,14 @@ namespace api.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!_currencyController.IsSupported(request.Currency))
+            if (!_currencyService.IsSupported(request.Currency))
             {
                 return new BadRequestResult();
             }
 
             var prevCurrency = _users[id].Currency;
             _users[id].Currency = request.Currency;
-            await _accountsController.UpdateCurrency(id, prevCurrency, request.Currency);
+            await _accountsService.UpdateCurrency(id, prevCurrency, request.Currency);
             return new OkResult();
         }
 

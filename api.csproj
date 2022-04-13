@@ -13,6 +13,7 @@
     <None Remove="Newtonsoft.Json" />
     <None Remove="Utils\" />
     <None Remove="Swashbuckle.AspNetCore" />
+    <None Remove="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
@@ -26,5 +27,6 @@
     <Folder Include="Utils\" />
     <Folder Include="Dtos\Responses\" />
     <Folder Include="Models\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using api.Dtos.Requests;
+using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,18 +12,18 @@ namespace api.Controllers
 {
     [ApiController]
     [Route("users/{userId}/accounts")]
-    public class AccountsController : ControllerBase
+    public class AccountsController : ControllerBase, IAccountsService
     {
         private static int _NEXT_ACCOUNT_ID = 1;
         private static readonly Dictionary<int, Dictionary<int, Account>> _userAccounts = new Dictionary<int, Dictionary<int, Account>>();
 
         private readonly ILogger<AccountsController> _logger;
-        private readonly CurrenciesController _currencyController;
+        private readonly ICurrenciesService _currencyService;
 
-        public AccountsController(ILogger<AccountsController> logger, CurrenciesController currencyController)
+        public AccountsController(ILogger<AccountsController> logger, ICurrenciesService currencyService)
         {
             _logger = logger;
-            _currencyController = currencyController;
+            _currencyService = currencyService;
         }
 
         [HttpGet]
@@ -69,11 +70,12 @@ namespace api.Controllers
             return new OkResult();
         }
 
-        internal async Task UpdateCurrency(int userId, string currentCurrency, string newCurrency)
+        [NonAction]
+        public async Task UpdateCurrency(int userId, string currentCurrency, string newCurrency)
         {
             if (currentCurrency == newCurrency) return;
 
-            var factor = await _currencyController.Convert(currentCurrency, newCurrency);
+            var factor = await _currencyService.Convert(currentCurrency, newCurrency);
 
             _userAccounts[userId].Values.ToList().ForEach(a => a.Balance *= factor);
         }

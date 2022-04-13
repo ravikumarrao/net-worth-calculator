@@ -1,4 +1,6 @@
 ﻿using System.Text.Json.Serialization;
+using api.Controllers;
+using api.Interfaces;
 using api.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +31,14 @@ namespace api
                 {
                     x.JsonSerializerOptions.PropertyNamingPolicy = new SnakeCaseNamingPolicy();
                     x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                })
-                .AddControllersAsServices();
+                });
+
+            services.AddScoped<ICurrenciesService, CurrenciesController>();
+            services.AddScoped<IUsersService, UsersController>();
+            services.AddScoped<IAccountsService, AccountsController>();
+            services.AddScoped<ICalculatorService, CalculatorController>();
+
+
 
             services.AddCors(options =>
             {
