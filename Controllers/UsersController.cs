@@ -19,14 +19,12 @@ namespace api.Controllers
 
         private readonly ILogger<UsersController> _logger;
         private static Dictionary<int, User> _users = new Dictionary<int, User>();
-        private IAccountsService _accountsService;
         private ICurrenciesService _currencyService;
 
 
-        public UsersController(ILogger<UsersController> logger, IAccountsService accountsService, ICurrenciesService currenciesService)
+        public UsersController(ILogger<UsersController> logger, ICurrenciesService currenciesService)
         {
             _logger = logger;
-            _accountsService = accountsService;
             _currencyService = currenciesService;
         }
 
@@ -65,7 +63,7 @@ namespace api.Controllers
 
             var prevCurrency = _users[id].Currency;
             _users[id].Currency = request.Currency;
-            await _accountsService.UpdateCurrency(id, prevCurrency, request.Currency);
+            //await _accountsService.UpdateCurrency(id, prevCurrency, request.Currency);
             return new OkResult();
         }
 

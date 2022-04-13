@@ -19,22 +19,37 @@ namespace api.Controllers
 
         private readonly ILogger<AccountsController> _logger;
         private readonly ICurrenciesService _currencyService;
+        private readonly IUsersService _usersService;
 
-        public AccountsController(ILogger<AccountsController> logger, ICurrenciesService currencyService)
+        public AccountsController(ILogger<AccountsController> logger, ICurrenciesService currencyService, IUsersService usersService)
         {
             _logger = logger;
             _currencyService = currencyService;
+            _usersService = usersService;
         }
 
         [HttpGet]
-        public List<Account> GetAccounts(int userId)
+        public async Task<List<Account>> GetAccounts(int userId, [FromQuery(Name = "currency")]string currency)
         {
             if (!_userAccounts.ContainsKey(userId))
             {
                 initDummyAccounts(userId);
             }
 
-            return _userAccounts[userId].Values.ToList();
+            var accounts = _userAccounts[userId].Values.ToList();
+            var activeCurrency = _usersService.GetUser(userId).Currency;
+            if (currency != null && activeCurrency != currency) {
+                var factor = await _currencyService.Convert(activeCurrency, currency);
+                accounts = accounts
+                        .Select(a =>
+                        {
+                            var clone = a.Clone();
+                            clone.Balance *= factor;
+                            return clone;
+                        }).ToList();
+            }
+
+            return accounts;
         }
 
         [HttpGet("{accountId}")]

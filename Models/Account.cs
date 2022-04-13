@@ -10,6 +10,17 @@ namespace api.Models
         public double Balance { get; set; }
         public AccountSubType SubType { get; set; }
         public AccountType Type { get => SubType.GetAccountType(); }
+
+        public Account Clone()
+        {
+            return new Account
+            {
+                Id = Id,
+                Name = Name,
+                Balance = Balance,
+                SubType = SubType
+            };
+        }
     }
 
     public enum AccountSubType
