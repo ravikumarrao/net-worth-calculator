@@ -9,6 +9,7 @@ namespace api.Models
         public string Name { get; set; }
         public double Balance { get; set; }
         public AccountSubType SubType { get; set; }
+        public AccountType Type { get => SubType.GetAccountType(); }
     }
 
     public enum AccountSubType
@@ -26,10 +27,12 @@ namespace api.Models
         Liability
     }
 
-    public static class AccountTypeEx {
+    public static class AccountTypeEx
+    {
 
-        public static AccountType GetAccountType(this AccountSubType subType) {
-            switch(subType)
+        public static AccountType GetAccountType(this AccountSubType subType)
+        {
+            switch (subType)
             {
                 case AccountSubType.CashAndInvestments:
                 case AccountSubType.LongTermAssets:
@@ -40,6 +43,6 @@ namespace api.Models
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        } 
+        }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace api.Controllers
 {
     [ApiController]
-    [Route("users/{userId}/acccounts")]
+    [Route("users/{userId}/accounts")]
     public class AccountsController : ControllerBase
     {
         private static int _NEXT_ACCOUNT_ID = 1;
